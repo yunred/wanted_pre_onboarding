@@ -3,7 +3,7 @@ import React from 'react';
 function Navigation() {
   return (
     <>
-      <ul>
+      <ul className="nav_ul">
         <li className="smDisplay">
           <a className="home" href="/">
             홈

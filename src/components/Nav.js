@@ -4,11 +4,25 @@ import Navigation from '../common/Navigation.js';
 import useMedia from '../common/useMediaQuery';
 import Aside from '../common/Aside.js';
 
-const NavBlock = styled.nav`
+const NavBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  ::after {
+    display: block;
+    height: 0.3px;
+    /*부모width에 상관없이 width 100%*/
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    content: '';
+    background-color: #e1e2e3;
+  }
   button {
     margin: 0;
     padding: 0;
@@ -22,9 +36,6 @@ const NavBlock = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    width: 100%;
-    padding: 15px 0px;
   }
 
   .MainBar_MainBar_nav_top_logo {
@@ -50,7 +61,6 @@ const NavBlock = styled.nav`
     img {
       object-fit: contain;
       margin-left: -70.62px;
-      margin-top: -4px;
       max-heigth: 20px;
     }
   }
@@ -78,6 +88,7 @@ const NavBlock = styled.nav`
   }
 
   li {
+    display: flex;
     position: relative;
     heigth: inherit;
     a {
@@ -112,12 +123,31 @@ const NavBlock = styled.nav`
     line-height: 30px;
   }
   .dashboardButton {
-    padding: 0;
-    font-weight: normal;
+    font-weight: 400;
     font-size: 13px;
     line-height: 30px;
+    height: 30px;
+    border: 1px solid #e1e2e3;
+    border-radius: 15px;
+    color: #666;
+    padding: 0 10px;
+    margin-left: 15px;
   }
+  .dashboard_left_divison::before {
+    display: block;
+    width: 1px;
+    height: 10px;
+    content: '';
+    margin: auto 10px;
+    background-color: #e1e2e3;
+  }
+
   @media screen and (max-width: 767px) {
+    .MainBar {
+      height: 60px;
+      width: 100%;
+      padding: 15px 0px;
+    }
     .mdDisplay {
       display: none;
     }
@@ -131,6 +161,11 @@ const NavBlock = styled.nav`
 
   @media screen and (min-width: 768px) and (max-width: 991px) {
     width: 90%;
+    .MainBar {
+      height: 60px;
+      width: 100%;
+      padding: 15px 0px;
+    }
     .smDisplay {
       display: none;
     }
@@ -142,12 +177,12 @@ const NavBlock = styled.nav`
     }
   }
 
-  @media screen and (min-width: 992px) {
-    height: 50px;
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
     width: 90%;
+    height: 50px;
     .MainBar {
       padding: 0;
-      height: 50px;
+      height: inherit;
     }
     .smDisplay {
       display: none;
@@ -158,11 +193,39 @@ const NavBlock = styled.nav`
     .signupLogin {
       color: rgb(68, 68, 68);
       border: none;
-      padding: 0;
+      padding: 0 10px;
       height: 30px;
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 600;
     }
     .noneLgDisplay {
       display: none;
+    }
+    .nav_ul > li > a {
+      padding: 15px 0px;
+    }
+    .nav_ul {
+      display: flex;
+      justify-content: space-evenly;
+      flex: 1;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    width: 90%;
+    .nav_ul li a {
+      padding: 15px;
+    }
+    .signupLogin {
+      color: rgb(68, 68, 68);
+      border: none;
+      padding: 0 10px;
+      height: 30px;
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 600;
     }
   }
 `;
@@ -175,7 +238,7 @@ function Nav() {
   return (
     <>
       <NavBlock>
-        <div className="MainBar">
+        <nav className="MainBar">
           <div className="MainBar_MainBar_nav_top_logo">
             <button type="button" className="MainBar_hamberger">
               <img
@@ -195,12 +258,12 @@ function Nav() {
           {lg ? (
             <>
               <Navigation />
-              <Aside pos="top" />
+              <Aside />
             </>
           ) : (
             <Aside />
           )}
-        </div>
+        </nav>
         {lg ? null : (
           <>
             <div className="SubBar">

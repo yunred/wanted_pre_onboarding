@@ -3,17 +3,14 @@ import useMedia from '../common/useMediaQuery';
 import styled from 'styled-components';
 
 const AsideBlock = styled.aside`
+  display: flex;
   padding: 10px 0px;
   height: 50px;
   ul {
+    inline-height: 50px;
+    heigth: 50px;
     display: flex;
     align-items: center;
-  }
-
-  .dashboardButton {
-    :before {
-      content: '|';
-    }
   }
 `;
 
@@ -85,9 +82,9 @@ function Aside(props) {
             </li>
           ) : null}
           {lg ? (
-            <li>
+            <li className="dashboard_left_divison">
               <a className="dashboardButton" href="/">
-                기업서비스
+                기업 서비스
               </a>
             </li>
           ) : null}
