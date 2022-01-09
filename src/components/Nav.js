@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Navigation from '../common/Navigation.js';
+import useMedia from '../common/useMediaQuery';
+import Aside from '../common/Aside.js';
 
-const NavBlock = styled.nav`
+const NavBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  ::after {
+    display: block;
+    height: 0.3px;
+    /*부모width에 상관없이 width 100%*/
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    content: '';
+    background-color: #e1e2e3;
+  }
   button {
     margin: 0;
     padding: 0;
@@ -19,14 +36,12 @@ const NavBlock = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    width: 100%;
-    padding: 15px 20px;
   }
 
   .MainBar_MainBar_nav_top_logo {
     display: flex;
     align-items: center;
+    height: inherit;
   }
   .MainBar_hamberger {
     margin-top: -2px;
@@ -41,12 +56,11 @@ const NavBlock = styled.nav`
   .logo_new {
     width: 100px;
     overflow: hidden;
-    heigth: 20px;
+    max-heigth: inherit;
 
     img {
       object-fit: contain;
       margin-left: -70.62px;
-      margin-top: -4px;
       max-heigth: 20px;
     }
   }
@@ -70,10 +84,13 @@ const NavBlock = styled.nav`
   ul {
     display: flex;
     list-style: none;
+    heigth: 100%;
   }
 
   li {
+    display: flex;
     position: relative;
+    heigth: inherit;
     a {
       cursor: point;
       text-decoration: none;
@@ -102,38 +119,126 @@ const NavBlock = styled.nav`
     margin-right: 10px;
   }
 
+  .asideUL {
+    line-height: 30px;
+  }
+  .dashboardButton {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 30px;
+    height: 30px;
+    border: 1px solid #e1e2e3;
+    border-radius: 15px;
+    color: #666;
+    padding: 0 10px;
+    margin-left: 15px;
+  }
+  .dashboard_left_divison::before {
+    display: block;
+    width: 1px;
+    height: 10px;
+    content: '';
+    margin: auto 10px;
+    background-color: #e1e2e3;
+  }
+
   @media screen and (max-width: 767px) {
+    .MainBar {
+      height: 60px;
+      width: 100%;
+      padding: 15px 0px;
+    }
     .mdDisplay {
       display: none;
+    }
+    .lgDisplay {
+      display: none;
+    }
+    .MainBar {
+      padding: 15px 0px;
     }
   }
 
   @media screen and (min-width: 768px) and (max-width: 991px) {
     width: 90%;
+    .MainBar {
+      height: 60px;
+      width: 100%;
+      padding: 15px 0px;
+    }
     .smDisplay {
       display: none;
     }
     .mdDisplay {
       display: block;
     }
+    .lgDisplay {
+      display: none;
+    }
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
     width: 90%;
+    height: 50px;
+    .MainBar {
+      padding: 0;
+      height: inherit;
+    }
     .smDisplay {
       display: none;
     }
-    .mdDisplay {
+    .lgDisplay {
+      display: block;
+    }
+    .signupLogin {
+      color: rgb(68, 68, 68);
+      border: none;
+      padding: 0 10px;
+      height: 30px;
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 600;
+    }
+    .noneLgDisplay {
       display: none;
+    }
+    .nav_ul > li > a {
+      padding: 15px 0px;
+    }
+    .nav_ul {
+      display: flex;
+      justify-content: space-evenly;
+      flex: 1;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    width: 90%;
+    .nav_ul li a {
+      padding: 15px;
+    }
+    .signupLogin {
+      color: rgb(68, 68, 68);
+      border: none;
+      padding: 0 10px;
+      height: 30px;
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 600;
     }
   }
 `;
 
 function Nav() {
+  let sm = useMedia('(max-width: 767px)');
+  let md = useMedia('(min-width: 768px) and (max-width: 991px)');
+  let lg = useMedia('(min-width: 992px)');
+
   return (
     <>
       <NavBlock>
-        <div className="MainBar">
+        <nav className="MainBar">
           <div className="MainBar_MainBar_nav_top_logo">
             <button type="button" className="MainBar_hamberger">
               <img
@@ -150,172 +255,23 @@ function Nav() {
               />
             </button>
           </div>
-          <button className="signupLogin" type="button">
-            회원가입하기
-          </button>
-        </div>
-        <div className="SubBar">
-          <ul>
-            <li className="smDisplay">
-              <a className="home" href="/">
-                홈
-              </a>
-            </li>
-            <li>
-              <a href="/">채용</a>
-            </li>
-            <li>
-              <a href="/">이벤트</a>
-            </li>
-            <li className="mdDisplay">
-              <a href="/">직군별 연봉</a>
-            </li>
-            <li className="mdDisplay">
-              <a href="/">이력서</a>
-            </li>
-            <li className="mdDisplay">
-              <a href="/">
-                커뮤니티
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="11"
-                    viewBox="0 0 18 11"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                      font-family="AppleSDGothicNeo-SemiBold, Apple SD Gothic Neo"
-                      font-size="9"
-                      font-weight="500"
-                    >
-                      <g fill="#36F">
-                        <g>
-                          <g>
-                            <g>
-                              <g>
-                                <g>
-                                  <g>
-                                    <text transform="translate(-931.000000, -13.000000) translate(224.000000, 7.000000) translate(210.000000, 6.000000) translate(350.000000, 0.000000) translate(147.000000, 0.000000)">
-                                      <tspan x="0" y="8">
-                                        New
-                                      </tspan>
-                                    </text>
-                                  </g>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                </span>
-              </a>
-            </li>
-            <li className="mdDisplay">
-              <a href="/">프리랜서</a>
-            </li>
-            <li className="mdDisplay">
-              <a href="/">
-                AI 합격예측
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="11"
-                    viewBox="0 0 18 11"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                      font-family="AppleSDGothicNeo-SemiBold, Apple SD Gothic Neo"
-                      font-size="9"
-                      font-weight="500"
-                    >
-                      <g fill="#36F">
-                        <g>
-                          <g>
-                            <g>
-                              <g>
-                                <g>
-                                  <g>
-                                    <text transform="translate(-931.000000, -13.000000) translate(224.000000, 7.000000) translate(210.000000, 6.000000) translate(350.000000, 0.000000) translate(147.000000, 0.000000)">
-                                      <tspan x="0" y="8">
-                                        Beta
-                                      </tspan>
-                                    </text>
-                                  </g>
-                                </g>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                </span>
-              </a>
-            </li>
-          </ul>
-          <aside>
-            <ul>
-              <li>
-                <button className="searchButton">
-                  <svg
-                    xmlns="https://www.w3.org/2000/svg"
-                    xmlnsXlink="https://www.w3.org/1999/xlink"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                  >
-                    <defs>
-                      <path
-                        id="qt2dnsql4a"
-                        d="M15.727 17.273a.563.563 0 10.796-.796l-4.875-4.875-.19-.165a.563.563 0 00-.764.028 5.063 5.063 0 111.261-2.068.562.562 0 101.073.338 6.188 6.188 0 10-1.943 2.894l4.642 4.644z"
-                      ></path>
-                    </defs>
-                    <g fill="none" fill-rule="evenodd">
-                      <use
-                        fill="#333"
-                        fill-rule="nonzero"
-                        stroke="#333"
-                        stroke-width=".3"
-                        xlinkHref="#qt2dnsql4a"
-                      ></use>
-                    </g>
-                  </svg>
-                </button>
-              </li>
-              <li>
-                <button className="menuButton">
-                  <svg
-                    width="18"
-                    height="18"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <defs>
-                      <path
-                        d="M9 7.5a1.5 1.5 0 1 1-.001 3.001A1.5 1.5 0 0 1 9 7.5zm5.05 0a1.5 1.5 0 1 1-.001 3.001A1.5 1.5 0 0 1 14.05 7.5zM4 7.5a1.5 1.5 0 1 1-.001 3.001A1.5 1.5 0 0 1 4 7.5z"
-                        id="a"
-                      ></path>
-                    </defs>
-                    <g fill="none" fill-rule="evenodd">
-                      <mask id="b" fill="#fff">
-                        <use xlinkHref="#a"></use>
-                      </mask>
-                      <use fill="#333" xlinkHref="#a"></use>
-                      <g mask="url(#b)" fill="#333">
-                        <path d="M0 0h18v18H0z"></path>
-                      </g>
-                    </g>
-                  </svg>
-                </button>
-              </li>
-            </ul>
-          </aside>
-        </div>
+          {lg ? (
+            <>
+              <Navigation />
+              <Aside />
+            </>
+          ) : (
+            <Aside />
+          )}
+        </nav>
+        {lg ? null : (
+          <>
+            <div className="SubBar">
+              <Navigation />
+              <Aside pos="bottom" />
+            </div>
+          </>
+        )}
       </NavBlock>
     </>
   );
