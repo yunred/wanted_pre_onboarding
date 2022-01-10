@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImgRender from '../common/ImgRender';
+import { imgItems } from '../common/ImgArray';
 
 const MainBlock = styled.main`
   .topBanner {
@@ -22,8 +23,10 @@ const MainBlock = styled.main`
 
   .img_track {
     opacity: 1;
-    /**/
-    width: calc(${props => props.size.width}*20px);
+    /*
+    transform: translate3d(calc(-${props => props.size.width}*0.9px), 0px, 0px);
+    */
+    width: calc(${props => props.size.width}*${imgItems.length}px);
   }
 
   .img_content {
@@ -55,6 +58,7 @@ const MainBlock = styled.main`
 
 function Main({ size }) {
   //let size = useWindowSize();
+
   return (
     <>
       <MainBlock size={size}>
@@ -63,7 +67,7 @@ function Main({ size }) {
           <div className="img_slider">
             <div className="img_list">
               <div className="img_track">
-                <ImgRender />
+                <ImgRender imgItems={imgItems} />
               </div>
             </div>
           </div>
