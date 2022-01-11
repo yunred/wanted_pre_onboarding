@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Navigation from '../common/Navigation.js';
 import useMedia from '../common/useMediaQuery';

@@ -1,5 +1,11 @@
 export const imgItems = [
   {
+    src: 'https://static.wanted.co.kr/images/banners/1438/015566ac.jpg',
+    alt: '스타벅스 굿즈 좋아하세요?',
+    h2: '스타벅스 굿즈 좋아하세요?',
+    h3: '사랑받는 디자인의 비밀',
+  },
+  {
     src: 'https://static.wanted.co.kr/images/banners/1454/e504b006.jpg',
     alt: '아는 만큼 보인다!',
     h2: '아는 만큼 보인다!',
@@ -64,5 +70,11 @@ export const imgItems = [
     alt: '스타벅스 굿즈 좋아하세요?',
     h2: '스타벅스 굿즈 좋아하세요?',
     h3: '사랑받는 디자인의 비밀',
+  },
+  {
+    src: 'https://static.wanted.co.kr/images/banners/1454/e504b006.jpg',
+    alt: '아는 만큼 보인다!',
+    h2: '아는 만큼 보인다!',
+    h3: "노동법 '채용' 시리즈",
   },
 ];
