@@ -43,8 +43,4 @@ export const imgItems = [
     src: 'https://static.wanted.co.kr/images/banners/1438/015566ac.jpg',
     alt: '스타벅스 굿즈 좋아하세요?',
   },
-  {
-    src: 'https://static.wanted.co.kr/images/banners/1454/e504b006.jpg',
-    alt: '아는 만큼 보인다!',
-  },
 ];
