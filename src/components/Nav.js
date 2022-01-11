@@ -56,12 +56,10 @@ const NavBlock = styled.div`
   .logo_new {
     width: 100px;
     overflow: hidden;
-    max-heigth: inherit;
 
     img {
       object-fit: contain;
       margin-left: -70.62px;
-      max-heigth: 20px;
     }
   }
   .signupLogin {
@@ -84,13 +82,13 @@ const NavBlock = styled.div`
   ul {
     display: flex;
     list-style: none;
-    heigth: 100%;
+    height: 100%;
   }
 
   li {
     display: flex;
     position: relative;
-    heigth: inherit;
+    height: inherit;
     a {
       cursor: point;
       text-decoration: none;
@@ -102,7 +100,7 @@ const NavBlock = styled.div`
         position: absolute;
         top: 5px;
         right: -7px;
-        pointer-event: none;
+        pointer-events: none;
       }
     }
     .home {
