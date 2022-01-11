@@ -39,7 +39,7 @@ const MainBlock = styled.main`
   .img_content > div {
     margin: 20px 10px;
   }
-  .img_info_box {
+  .img_info_content {
     width: 100%;
     display: inline-block;
   }
@@ -53,6 +53,65 @@ const MainBlock = styled.main`
       min-height: 183px;
       border-radius: 4px;
       object-fit: cover;
+    }
+  }
+  .img_info {
+    text-align: center;
+    h2 {
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+      color: #333;
+    }
+    h3 {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.15;
+      color: #666;
+    }
+    hr {
+      display: none;
+      height: 1px;
+    }
+    .info_button {
+      position: relative;
+      justify-content: center;
+      vertical-align: middle;
+      text-decoration: none;
+      padding: 6px 8px;
+      margin: 8px 0;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      a {
+        color: #36f;
+      }
+
+      span {
+        width: 100%;
+        font-size: inherit;
+        font-weight: inherit;
+      }
+    }
+    .info_button_text {
+      margin-right: 2px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+    .arrow_icon {
+      margin-top: -2px;
+      margin-right: -1px;
+      margin-left: -1px;
+    }
+    .arrow_icon_root_svg {
+      object-fit: contain;
+      width: 1em;
+      height: 1em;
+      user-select: none;
+      display: inline-block;
+      fill: #36f;
     }
   }
 `;
@@ -114,14 +173,33 @@ function Main({ size }) {
                   return (
                     <div className="img_content" key={index}>
                       <div>
-                        <div className="img_info_box">
+                        <div className="img_info_content">
                           <div className="img_style">
                             <a href="/" className="" onClick={preventEvent}>
                               <img src={item.src} alt={item.alt} />
                             </a>
                           </div>
                           <div className="img_info">
-                            <h1>설명</h1>
+                            <h2>{item.h2}</h2>
+                            <h3>{item.h3}</h3>
+                            <hr />
+                            <div className="info_button">
+                              <a href="/">
+                                <span className="info_button_text">
+                                  바로가기
+                                </span>
+                                <span className="arrow_icon">
+                                  <span className="arrow_icon_root">
+                                    <svg
+                                      className="arrow_icon_root_svg"
+                                      viewBox="0 0 18 18"
+                                    >
+                                      <path d="m11.955 9-5.978 5.977a.563.563 0 0 0 .796.796l6.375-6.375a.563.563 0 0 0 0-.796L6.773 2.227a.562.562 0 1 0-.796.796L11.955 9z"></path>
+                                    </svg>
+                                  </span>
+                                </span>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
