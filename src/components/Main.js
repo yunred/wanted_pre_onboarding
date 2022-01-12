@@ -163,6 +163,13 @@ const MainBlock = styled.main`
     fill: currentColor;
     font-size: inherit;
   }
+  /*배너 활성화 스타일*/
+  .notActive {
+    filter: brightness(0.5);
+    .img_info {
+      display: none;
+    }
+  }
   @media screen and (min-width: 1200px) {
     .topBanner {
       height: auto;
@@ -297,7 +304,12 @@ function Main({ size }) {
               >
                 {imgItems.map((item, index) => {
                   return (
-                    <div className="img_content" key={index}>
+                    <div
+                      className={`img_content ${
+                        index === count ? 'active' : 'notActive'
+                      }`}
+                      key={index}
+                    >
                       <div>
                         <div className="img_info_content">
                           <div className="img_style">
