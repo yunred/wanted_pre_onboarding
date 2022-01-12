@@ -4,6 +4,9 @@ import { imgItems } from '../common/ImgArray';
 import useMedia from '../common/useMediaQuery';
 
 const MainBlock = styled.main`
+  button {
+    border: none;
+  }
   .topBanner {
     position: relative;
     overflow: hidden;
@@ -32,7 +35,6 @@ const MainBlock = styled.main`
       0px,
       0px
     );
-    transform: translateX(${props => props.moveXw});
     width: calc(${props => props.size.width}*${imgItems.length}*0.9px);
   }
 
@@ -66,8 +68,10 @@ const MainBlock = styled.main`
       object-fit: cover;
     }
   }
+  /*배너 이미지 정보*/
   .img_info {
     text-align: center;
+    overflow: hidden;
     h2 {
       margin-top: 20px;
       font-size: 18px;
@@ -152,30 +156,31 @@ const MainBlock = styled.main`
     justify-content: inherit;
     align-items: inherit;
   }
+  .slide_button_root_svg {
+    user-select: none;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    font-size: inherit;
+  }
   @media screen and (min-width: 1200px) {
     .topBanner {
       height: auto;
     }
     .img_content {
+      position: relative;
       width: 1060px;
+      z-index: auto;
     }
     .img_track {
       opacity: 1;
       transform: translate3d(calc(-${props => props.count}*1060px), 0px, 0px);
-      /* transform: translate3d(
-        calc(
-          -${props => props.count}*1060px + (
-              ${props => props.size.width}-1200px
-            ) / 2
-        ), */
-        0px,
-        0px
-      );
       transform: translateX(${props => props.moveX});
       width: calc(1060px * ${imgItems.length});
     }
     .img_list {
-      padding: 0px 50px;
+      /*이미지 슬라이드 시작점의 padding을 반응형으로 조절해서 중앙배치*/
+      padding: 0px calc((100% - 1060px) / 2);
     }
     .img_style {
       img {
@@ -190,6 +195,38 @@ const MainBlock = styled.main`
     .slick-slider .img_content .topBanner {
       padding: 0 12px;
       box-sizing: content-box;
+    }
+    .img_info {
+      position: absolute;
+      z-index: 1;
+      bottom: 48px;
+      left: 34px;
+      height: 146px;
+      width: 330px;
+      border-radius: 4px;
+      background-color: #fff;
+      opacity: 1;
+      text-align: left;
+      h2 {
+        margin: 20px 20px 0 20px;
+        font-size: 20px;
+        line-height: 1.5;
+      }
+      h3 {
+        margin: 0 20px;
+        height: 44px;
+        font-size: 14px;
+        line-height: 1.64;
+        color: #333;
+      }
+      hr {
+        display: block;
+        border: none;
+        background-color: #ececec;
+      }
+      .info_button {
+        margin: 6px 0 0 13px;
+      }
     }
   }
 `;
@@ -210,7 +247,8 @@ function Main({ size }) {
   const onImgDragMove = e => {
     e.preventDefault();
     if (isDrag) {
-      moveX = parseInt(e.clientX);
+      moveX = e.clientX;
+      console.log(moveX);
     }
   };
   const onImgDragEnd = e => {
@@ -304,7 +342,7 @@ function Main({ size }) {
                 onClick={onLeftClick}
               >
                 <span className="slide_button_root">
-                  <svg className="arrow_icon_root_svg" viewBox="0 0 18 18">
+                  <svg className="slide_button_root_svg" viewBox="0 0 18 18">
                     <path d="m6.045 9 5.978-5.977a.563.563 0 1 0-.796-.796L4.852 8.602a.562.562 0 0 0 0 .796l6.375 6.375a.563.563 0 0 0 .796-.796L6.045 9z"></path>
                   </svg>
                 </span>
@@ -314,7 +352,7 @@ function Main({ size }) {
                 onClick={onRightClick}
               >
                 <span className="slide_button_root">
-                  <svg className="arrow_icon_root_svg" viewBox="0 0 18 18">
+                  <svg className="slide_button_root_svg" viewBox="0 0 18 18">
                     <path d="m11.955 9-5.978 5.977a.563.563 0 0 0 .796.796l6.375-6.375a.563.563 0 0 0 0-.796L6.773 2.227a.562.562 0 1 0-.796.796L11.955 9z"></path>
                   </svg>
                 </span>
