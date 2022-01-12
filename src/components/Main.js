@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from 'react';
+import styled, { css } from 'styled-components';
 import { imgItems } from '../common/ImgArray';
 import useMedia from '../common/useMediaQuery';
 
@@ -30,6 +30,12 @@ const MainBlock = styled.main`
     top: 0;
     display: block;
     opacity: 1;
+    ${props =>
+      props.count === 0 || props.count === imgItems.length - 1
+        ? null
+        : css`
+            transition: transform 500ms ease;
+          `}
     transform: translate3d(
       calc(-${props => props.size.width}*${props => props.count}*0.9px),
       0px,
@@ -244,6 +250,8 @@ function Main({ size }) {
   let [count, setCount] = useState(1);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
+  const [isStop, setIsStop] = useState(false);
+
   let endX, moveX;
   const onImgDragStart = e => {
     e.preventDefault();
@@ -285,9 +293,40 @@ function Main({ size }) {
     else setCount(count - 1);
   };
   const onRightClick = () => {
+    console.log(count);
     if (count === imgItems.length - 2) setCount(1);
     else setCount(count + 1);
   };
+  const onImgDragStop = () => {
+    setIsStop(true);
+  };
+  const onImgDragReStart = () => {
+    setIsStop(false);
+  };
+
+  /*무한슬라이드 구현*/
+  useInterval(
+    () => {
+      onRightClick();
+    },
+    isStop ? null : 5000
+  );
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+    useEffect(() => {
+      savedCallback.current = callback; //onRightClick
+    });
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay); //onRightClick 실행
+        return () => clearInterval(id);
+      }
+    }, [delay]); //delay로 setInterval 처럼 구현
+  }
 
   return (
     <>
@@ -301,6 +340,8 @@ function Main({ size }) {
                 onMouseDown={onImgDragStart}
                 onMouseUp={onImgDragEnd}
                 onMouseMove={onImgDragMove}
+                onMouseOver={onImgDragStop}
+                onMouseOut={onImgDragReStart}
               >
                 {imgItems.map((item, index) => {
                   return (
