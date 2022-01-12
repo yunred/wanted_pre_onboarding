@@ -31,8 +31,10 @@ const MainBlock = styled.main`
     display: block;
     opacity: 1;
     ${props =>
-      props.count === 0 || props.count === imgItems.length - 1
-        ? null
+      props.isSideImg === true
+        ? css`
+            transition: 0ms;
+          `
         : css`
             transition: transform 500ms ease;
           `}
@@ -251,6 +253,7 @@ function Main({ size }) {
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
   const [isStop, setIsStop] = useState(false);
+  const [isSideImg, setIsSideImg] = useState(false);
 
   let endX, moveX;
   const onImgDragStart = e => {
@@ -273,14 +276,9 @@ function Main({ size }) {
     let diffX = endX - startX;
     console.log(size.width);
     if (diffX > 0 && Math.abs(diffX) > size.width * 0.2) {
-      console.log(count);
-      //count = count === 0 ? imgItems.length - 1 : count - 1;
-      //count는 0 부터 length-1 까지
       if (count === 1) setCount(imgItems.length - 2);
       else setCount(count - 1);
     } else if (diffX < 0 && Math.abs(diffX) > size.width * 0.2) {
-      console.log(count);
-      //count = count === imgItems.length - 1 ? 0 : count + 1;
       if (count === imgItems.length - 2) setCount(1);
       else setCount(count + 1);
     }
@@ -289,13 +287,32 @@ function Main({ size }) {
     e.preventDefault();
   };
   const onLeftClick = () => {
-    if (count === 1) setCount(imgItems.length - 2);
-    else setCount(count - 1);
+    if (count === 1) {
+      //두 번째 실행
+      setTimeout(() => {
+        setIsSideImg(true);
+        setCount(imgItems.length - 2);
+      }, 400);
+      //첫 번째 실행
+      setIsSideImg(false);
+      setCount(count - 1);
+    } else {
+      setIsSideImg(false);
+      setCount(count - 1);
+    }
   };
   const onRightClick = () => {
-    console.log(count);
-    if (count === imgItems.length - 2) setCount(1);
-    else setCount(count + 1);
+    if (count === imgItems.length - 2) {
+      setTimeout(() => {
+        setIsSideImg(true);
+        setCount(1);
+      }, 400);
+      setIsSideImg(false);
+      setCount(count + 1);
+    } else {
+      setIsSideImg(false);
+      setCount(count + 1);
+    }
   };
   const onImgDragStop = () => {
     setIsStop(true);
@@ -330,7 +347,7 @@ function Main({ size }) {
 
   return (
     <>
-      <MainBlock size={size} count={count} moveX={moveX}>
+      <MainBlock size={size} count={count} moveX={moveX} isSideImg={isSideImg}>
         <span>{size.width}</span>
         <div className="topBanner">
           <div className="img_slider">
