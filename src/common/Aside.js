@@ -1,16 +1,6 @@
 import React from 'react';
 import useMedia from '../common/useMediaQuery';
-import styled from 'styled-components';
-
-const AsideBlock = styled.aside`
-  display: flex;
-  padding: 9px 0px;
-  height: 100%;
-  ul {
-    display: flex;
-    align-items: center;
-  }
-`;
+import { AsideBlock } from './NavStyle.js';
 
 function Aside() {
   let lg = useMedia('(min-width: 992px)');
