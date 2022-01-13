@@ -19,7 +19,7 @@ const MainBlock = styled.main`
   }
   .img_list {
     position: relative;
-    padding: 0px 40px;
+    padding: 0px 40px; //고정
     display: block;
     overflow: hidden;
   }
@@ -39,11 +39,12 @@ const MainBlock = styled.main`
             transition: transform 500ms ease;
           `}
     transform: translate3d(
-      calc(-${props => props.size.width}*${props => props.count}*0.9px),
+      calc((${props => props.size.width}px - 80px) * (-${props =>
+      props.count})),
       0px,
       0px
     );
-    width: calc(${props => props.size.width}*${imgItems.length}*0.9px);
+    width: calc((${props => props.size.width}px - 80px) * ${imgItems.length});
   }
 
   .img_track::before {
@@ -52,7 +53,7 @@ const MainBlock = styled.main`
   }
   .img_content {
     display: table;
-    width: calc(${props => props.size.width}*0.9px);
+    width: calc(${props => props.size.width}px - 80px);
 
     float: left;
   }
@@ -266,7 +267,6 @@ function Main({ size }) {
     e.preventDefault();
     if (isDrag) {
       moveX = e.clientX;
-      console.log(moveX);
     }
   };
   const onImgDragEnd = e => {
@@ -276,11 +276,9 @@ function Main({ size }) {
     let diffX = endX - startX;
     console.log(size.width);
     if (diffX > 0 && Math.abs(diffX) > size.width * 0.2) {
-      if (count === 1) setCount(imgItems.length - 2);
-      else setCount(count - 1);
+      onLeftClick();
     } else if (diffX < 0 && Math.abs(diffX) > size.width * 0.2) {
-      if (count === imgItems.length - 2) setCount(1);
-      else setCount(count + 1);
+      onRightClick();
     }
   };
   const preventEvent = e => {
@@ -292,7 +290,7 @@ function Main({ size }) {
       setTimeout(() => {
         setIsSideImg(true);
         setCount(imgItems.length - 2);
-      }, 400);
+      }, 300);
       //첫 번째 실행
       setIsSideImg(false);
       setCount(count - 1);
@@ -306,7 +304,7 @@ function Main({ size }) {
       setTimeout(() => {
         setIsSideImg(true);
         setCount(1);
-      }, 400);
+      }, 300);
       setIsSideImg(false);
       setCount(count + 1);
     } else {
@@ -348,7 +346,6 @@ function Main({ size }) {
   return (
     <>
       <MainBlock size={size} count={count} moveX={moveX} isSideImg={isSideImg}>
-        <span>{size.width}</span>
         <div className="topBanner">
           <div className="img_slider">
             <div className="img_list">
