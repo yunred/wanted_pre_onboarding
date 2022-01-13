@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Navigation from '../common/Navigation.js';
 import useMedia from '../common/useMediaQuery';
@@ -6,6 +6,7 @@ import Aside from '../common/Aside.js';
 
 const NavBlock = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin: 0 auto;
 
@@ -62,16 +63,6 @@ const NavBlock = styled.div`
       margin-left: -70.62px;
     }
   }
-  .signupLogin {
-    color: rgb(51, 102, 255);
-    font-size: 14px;
-    line-height: 32px;
-    height: 34px;
-    border: 1px solid rgb(51, 102, 255);
-    border-radius: 17px;
-    padding: 0px 14px;
-  }
-
   .SubBar {
     display: flex;
     justify-content: space-between;
@@ -105,9 +96,11 @@ const NavBlock = styled.div`
     }
     .home {
       padding-left: 20px;
+      border-bottom: 2px solid rgb(51, 102, 255);
     }
   }
 
+  /*Aside.js*/
   .searchButton {
     padding: 0 5px;
   }
@@ -119,6 +112,48 @@ const NavBlock = styled.div`
 
   .asideUL {
     line-height: 30px;
+  }
+  .hasNewNotificationAlarm {
+    position: relative;
+    vertical-align: middle;
+  }
+  .hasNewNotificationAlarm_button {
+    position: relative;
+    padding: 0, 5px;
+  }
+
+  .newBadge {
+    position: absolute;
+    top: -4px;
+    left: 16px;
+    background-color: rgb(51, 102, 255);
+    color: #fff;
+    font-weight: bold;
+    font-size: 5px;
+    width: 13px;
+    height: 13px;
+    line-height: normal;
+    padding-left: 2px;
+    border-radius: 5px;
+  }
+  .avatarImage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #e1e2e3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+  }
+  .newBadge_avatar {
+    top: -2px;
+    left: 22px;
   }
   .dashboardButton {
     font-weight: 400;
@@ -144,16 +179,13 @@ const NavBlock = styled.div`
     .MainBar {
       height: 60px;
       width: 100%;
-      padding: 15px 0px;
+      padding: 15px 20px;
     }
     .mdDisplay {
       display: none;
     }
     .lgDisplay {
       display: none;
-    }
-    .MainBar {
-      padding: 15px 0px;
     }
   }
 
@@ -188,49 +220,64 @@ const NavBlock = styled.div`
     .lgDisplay {
       display: block;
     }
-    .signupLogin {
-      color: rgb(68, 68, 68);
-      border: none;
-      padding: 0 10px;
-      height: 30px;
-      margin-right: 6px;
-      font-size: 14px;
-      line-height: 1;
-      font-weight: 600;
-    }
     .noneLgDisplay {
       display: none;
-    }
-    .nav_ul > li > a {
-      padding: 15px 0px;
     }
     .nav_ul {
       display: flex;
       justify-content: space-evenly;
       flex: 1;
     }
+    .nav_ul > li > a {
+      padding: 15px 0px;
+    }
+    .nav_ul li a > span {
+      right: -20px;
+    }
+    .hasNewNotificationAlarm_button {
+      margin: 5px 10px 0 0;
+      padding: 0 10px;
+    }
+
+    .newBadge {
+      top: -4px;
+      left: 24px;
+    }
   }
   @media screen and (min-width: 1200px) {
-    width: 90%;
+    width: 100%;
+    .smDisplay {
+      display: none;
+    }
+    .MainBar {
+      margin: 0 auto;
+      height: 50px;
+      width: 1060px;
+      position: relative;
+    }
     .nav_ul li a {
       padding: 15px;
     }
-    .signupLogin {
-      color: rgb(68, 68, 68);
-      border: none;
+    .asideUL button {
       padding: 0 10px;
-      height: 30px;
-      margin-right: 6px;
-      font-size: 14px;
-      line-height: 1;
-      font-weight: 600;
+    }
+    .hasNewNotificationAlarm_button {
+      margin: 5px 10px 0 0;
+      padding: 0 10px;
+    }
+
+    .newBadge {
+      top: -4px;
+      left: 24px;
+    }
+    .newBadge_avatar {
+      top: -1px;
+      left: 32px;
     }
   }
 `;
 
 function Nav() {
-  let sm = useMedia('(max-width: 767px)');
-  let md = useMedia('(min-width: 768px) and (max-width: 991px)');
   let lg = useMedia('(min-width: 992px)');
 
   return (
@@ -258,9 +305,7 @@ function Nav() {
               <Navigation />
               <Aside />
             </>
-          ) : (
-            <Aside />
-          )}
+          ) : null}
         </nav>
         {lg ? null : (
           <>
